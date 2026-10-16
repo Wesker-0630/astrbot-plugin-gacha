@@ -1,0 +1,5 @@
+name: 抽老婆插件
+desc: 抽老婆插件，外置wives.json卡池，可在config.json自定义assets图片目录，支持本地图片/网络URL，每日3抽，兑换、抢夺老婆，收集进度图
+version: "1.0"
+author: "Wesker-0630"
+astrbot_version: ">=4.28.0-beta.0"
