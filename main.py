@@ -57,7 +57,23 @@ def load_user_data():
     if not os.path.exists(USER_DATA_PATH):
         return {}
     with open(USER_DATA_PATH, "r", encoding="utf-8") as f:
-        return json.load(f)
+        raw_data = json.load(f)
+    # 兼容旧存档，自动补全缺失字段
+    fixed_data = {}
+    for uid, ud in raw_data.items():
+        default = {
+            "wives": {},
+            "daily_draw": 0,
+            "last_draw_date": "",
+            "rob_used": False,
+            "last_rob_date": "",
+            "ntr_fail_date": ""
+        }
+        for k, v in default.items():
+            if k not in ud:
+                ud[k] = v
+        fixed_data[uid] = ud
+    return fixed_data
 
 
 def save_user_data(data):
@@ -124,7 +140,7 @@ def build_grid_image(item_list, title_text: str, cols: int, owned_ids: set = Non
 
     try:
         font_title = ImageFont.truetype("simhei.ttf", 32)
-        font_info = ImageFont.truetype("simhei.ttf", 20) # 我的老婆文字20号
+        font_info = ImageFont.truetype("simhei.ttf", 20)  # 我的老婆文字20号
     except Exception:
         font_title = ImageFont.load_default(size=32)
         font_info = ImageFont.load_default(size=20)
@@ -203,7 +219,7 @@ def build_full_pool_image(pool, owned_ids: set = None):
 
     try:
         font_title = ImageFont.truetype("simhei.ttf", 32)
-        font_info = ImageFont.truetype("simhei.ttf", 14) #老婆图鉴文字14号
+        font_info = ImageFont.truetype("simhei.ttf", 14)  #老婆图鉴文字14号
     except Exception:
         font_title = ImageFont.load_default(size=32)
         font_info = ImageFont.load_default(size=14)
@@ -244,7 +260,6 @@ def build_full_pool_image(pool, owned_ids: set = None):
             draw.text((x0 + 20, y0 + THUMB_H // 2), "图片缺失", font=font_info, fill="#333333")
 
         draw.rectangle([x0, y0, x0 + THUMB_W, y0 + THUMB_H], outline=GOLD_COLOR, width=3)
-
         text_y = y0 + THUMB_H + 5
         text_line1 = f"ID:{wife['id']} {wife['name']}"
         draw.text((x0 + 10, text_y), text_line1, font=font_info, fill="#111111")
@@ -265,12 +280,14 @@ class WifeGachaPlugin(Star):
         save_user_data(self.user_data)
 
     def reset_user_daily(self, user_id: str, today: str):
+        # 新建用户自动补全全套默认字段
         ud = self.user_data.get(user_id, {
             "wives": {},
             "daily_draw": 0,
             "last_draw_date": "",
             "rob_used": False,
-            "last_rob_date": ""
+            "last_rob_date": "",
+            "ntr_fail_date": ""
         })
         if ud["last_draw_date"] != today:
             ud["daily_draw"] = 0
@@ -281,7 +298,7 @@ class WifeGachaPlugin(Star):
         return ud
 
     # 管理员指令：添加老婆
-    @filter.command("添加老婆")
+    @filter.command("添加老婆", priority=100)
     async def add_wife(self, event: AstrMessageEvent, name: str, img_path: str):
         if not event.is_admin():
             yield event.plain_result("权限不足，仅管理员可用！")
@@ -295,7 +312,7 @@ class WifeGachaPlugin(Star):
         yield event.plain_result(f"✅ 添加成功！ID:{new_id}\n名称：{name}\n图片名：{img_path}")
 
     # 管理员指令：删除老婆
-    @filter.command("删除老婆")
+    @filter.command("删除老婆", priority=100)
     async def del_wife(self, event: AstrMessageEvent, wife_id: int):
         if not event.is_admin():
             yield event.plain_result("权限不足，仅管理员可用！")
@@ -311,7 +328,7 @@ class WifeGachaPlugin(Star):
         yield event.plain_result("❌ 找不到该ID角色")
 
     # 管理员指令：清空全部用户记录
-    @filter.command("重置全部老婆记录")
+    @filter.command("重置全部老婆记录", priority=100)
     async def reset_all_user_data(self, event: AstrMessageEvent):
         if not event.is_admin():
             yield event.plain_result("❌权限不足，仅管理员可用！")
@@ -320,7 +337,7 @@ class WifeGachaPlugin(Star):
         save_user_data(self.user_data)
         yield event.plain_result("✅ 已清空全部用户的老婆收集记录、每日抽卡、抢夺记录！卡池角色保留。")
 
-    @filter.command("抽老婆")
+    @filter.command("抽老婆", priority=100)
     async def draw_wife(self, event: AstrMessageEvent):
         today = str(date.today())
         user_id = event.get_sender_id()
@@ -364,7 +381,7 @@ class WifeGachaPlugin(Star):
         yield event.chain_result(chain)
 
     # ========== 查看老婆：支持输入ID或者角色名称搜索 ==========
-    @filter.command("查看老婆")
+    @filter.command("查看老婆", priority=100)
     async def view_wife(self, event: AstrMessageEvent, keyword: str):
         user_id = event.get_sender_id()
         ud = self.user_data.get(user_id, {"wives": {}})
@@ -413,7 +430,7 @@ class WifeGachaPlugin(Star):
         yield event.chain_result(chain)
 
     # ========== 我的老婆：每页16个，4列 ==========
-    @filter.command("我的老婆")
+    @filter.command("我的老婆", priority=100)
     async def my_wives(self, event: AstrMessageEvent, page: int = 1):
         user_id = event.get_sender_id()
         ud = self.user_data.get(user_id, {"wives": {}})
@@ -454,7 +471,7 @@ class WifeGachaPlugin(Star):
             yield event.plain_result("生成图片失败！")
 
     # ========== 老婆池列表：全部角色超长总览大图 ==========
-    @filter.command("老婆图鉴")
+    @filter.command("老婆图鉴", priority=100)
     async def wife_list(self, event: AstrMessageEvent):
         user_id = event.get_sender_id()
         ud = self.user_data.get(user_id, {"wives": {}})
@@ -475,7 +492,7 @@ class WifeGachaPlugin(Star):
         else:
             yield event.plain_result("生成图片失败！")
 
-    @filter.command("收集进度")
+    @filter.command("收集进度", priority=100)
     async def wife_progress(self, event: AstrMessageEvent):
         user_id = event.get_sender_id()
         ud = self.user_data.get(user_id, {"wives": {}})
@@ -488,7 +505,7 @@ class WifeGachaPlugin(Star):
             chain.append(Comp.Image.fromFileSystem(img_path))
         yield event.chain_result(chain)
 
-    @filter.command("兑换老婆")
+    @filter.command("兑换老婆", priority=100)
     async def exchange_wife(self, event: AstrMessageEvent, wife_id: int):
         today = str(date.today())
         user_id = event.get_sender_id()
@@ -524,7 +541,7 @@ class WifeGachaPlugin(Star):
                     chain.append(Comp.Image.fromFileSystem(img_full_path))
         yield event.chain_result(chain)
 
-    @filter.command("ntr")
+    @filter.command("ntr", priority=100)
     async def ntr_wife(self, event: AstrMessageEvent):
         attacker_id = str(event.get_sender_id())
         # 遍历 message_obj.message 寻找At组件
@@ -549,7 +566,6 @@ class WifeGachaPlugin(Star):
             return
 
         # 获取当前日期，用于每日重置
-        from datetime import date
         today = str(date.today())
 
         # 读取攻击者存档
@@ -569,13 +585,12 @@ class WifeGachaPlugin(Star):
             yield event.plain_result(f"❌ @{target_id} 还没有任何老婆，无法NTR！")
             return
 
-        # NTR成功率
-        success_rate = 0.4
-        import random
+        # NTR成功率 60%
+        success_rate = 0.6
         roll = random.random()
 
         if roll < success_rate:
-            # ✅ 成功：随机复制一个老婆给自己，对方保留不变
+            # ✅ 成功：复制角色给自己，对方保留原有角色
             stolen_wid = random.choice(list(target_wives.keys()))
             wife_info = next((w for w in self.wives_pool if str(w["id"]) == stolen_wid), None)
             if not wife_info:
@@ -603,7 +618,7 @@ class WifeGachaPlugin(Star):
                 Comp.Plain(f"\n💔 NTR失败！黄毛被干掉了。")
             ])
 
-    @filter.command("老婆帮助")
+    @filter.command("老婆帮助", priority=100)
     async def help(self, event: AstrMessageEvent):
         help_text = """📖抽老婆插件指令：
 /抽老婆 - 每日最多3次抽卡
@@ -612,7 +627,8 @@ class WifeGachaPlugin(Star):
 /收集进度 - 查看收集进度
 /老婆图鉴 - 一次性生成全部角色超长总览大图
 /兑换老婆 [ID] - 消耗3张相同老婆兑换未拥有角色
-/ntr [对方ID] - 抢夺对方老婆（每日1次，成功率30%）
+/ntr [对方ID] - 抢夺对方老婆（成功率60%）
+
 管理员：
 /添加老婆 [名字] [图片文件名]
 /删除老婆 [ID]
