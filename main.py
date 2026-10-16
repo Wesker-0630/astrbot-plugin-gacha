@@ -22,6 +22,7 @@ POOL_TMP_PATH = os.path.join(DATA_DIR, "pool_full_grid.png")
 MY_WIFE_PAGE_SIZE = 16        # 我的老婆每页16个角色
 MY_WIFE_GRID_COLS = 4         # 我的老婆网格列数：4列
 POOL_GRID_COLS = 10            # 老婆图鉴网格列数：10列
+MY_WIFE_TEXT_HEIGHT = 50      # 我的老婆文字区域高度
 
 # 老婆图鉴全局缩略图配置
 THUMB_W = 100                 # 老婆图鉴缩略图宽度
@@ -108,7 +109,7 @@ def build_grid_image(item_list, title_text: str, cols: int, owned_ids: set = Non
     # ========== 我的老婆单独尺寸定义 ==========
     GRID_THUMB_W = 500
     GRID_THUMB_H = 500
-    GRID_TEXT_HEIGHT = 40
+    GRID_TEXT_HEIGHT = 50
     # ========================================
     item_num = len(item_list)
     if item_num == 0:
@@ -344,7 +345,7 @@ class WifeGachaPlugin(Star):
         self.save_all_userdata()
 
         # 在消息链头部添加@自己
-        chain = [Comp.At(event.get_sender_id()), Comp.Plain(f"{tip}\n{picked['name']}【{wear}】")]
+        chain = [Comp.At(qq=event.get_sender_id()), Comp.Plain(f"{tip}\n{picked['name']}【{wear}】")]
         img_val = picked["img"]
         self.logger.info(f"[Gacha Debug]角色:{picked['name']}, img字段:{img_val}")
         if img_val:
@@ -524,47 +525,83 @@ class WifeGachaPlugin(Star):
         yield event.chain_result(chain)
 
     @filter.command("ntr")
-    async def rob_wife(self, event: AstrMessageEvent, target_user_id: str):
+    async def ntr_wife(self, event: AstrMessageEvent):
+        attacker_id = str(event.get_sender_id())
+        # 遍历 message_obj.message 寻找At组件
+        target_id = None
+        for comp in event.message_obj.message:
+            if comp.type == "At":
+                target_id = str(comp.qq)
+                break
+        # ==========新增调试打印==========
+        print(f"【DEBUG】攻击者ID：{attacker_id}，类型：{type(attacker_id)}")
+        print(f"【DEBUG】目标ID：{target_id}，类型：{type(target_id)}")
+        # =================================
+        if target_id is None:
+            yield event.plain_result("❌ 用法错误！指令示例：/ntr @某人")
+            return
+
+        if attacker_id == target_id:
+            yield event.chain_result([
+                Comp.At(qq=attacker_id),
+                Comp.Plain("\n❌ 为什么要NTR自己！")
+            ])
+            return
+
+        # 获取当前日期，用于每日重置
+        from datetime import date
         today = str(date.today())
-        attacker_id = event.get_sender_id()
-        ud_attacker = self.reset_user_daily(attacker_id, today)
-        if ud_attacker["rob_used"]:
-            yield event.plain_result("❌ 今天ntr次数已用完，明天再来！")
+
+        # 读取攻击者存档
+        ud_attacker = self.user_data.get(attacker_id, {"wives": {}, "ntr_fail_date": ""})
+        # 判断今日是否已经失败过
+        if ud_attacker.get("ntr_fail_date", "") == today:
+            yield event.chain_result([
+                Comp.At(qq=attacker_id),
+                Comp.Plain("\n❌ 黄毛被干掉了，等待复活。")
+            ])
             return
-        ud_target = self.user_data.get(target_user_id, {"wives": {}})
+
+        # 读取目标用户存档
+        ud_target = self.user_data.get(target_id, {"wives": {}})
         target_wives = ud_target["wives"]
-        if not target_wives:
-            yield event.plain_result("❌对方没有任何老婆可以牛！")
+        if len(target_wives) == 0:
+            yield event.plain_result(f"❌ @{target_id} 还没有任何老婆，无法NTR！")
             return
-        ud_attacker["rob_used"] = True
+
+        # NTR成功率
+        success_rate = 0.4
+        import random
         roll = random.random()
-        if roll <= 0.3:
-            rob_wid = random.choice(list(target_wives.keys()))
-            rob_wife = next(w for w in self.wives_pool if str(w["id"]) == rob_wid)
-            target_wives[rob_wid] -= 1
-            if target_wives[rob_wid] <= 0:
-                del target_wives[rob_wid]
-            ud_target["wives"] = target_wives
-            ud_attacker["wives"][rob_wid] = ud_attacker["wives"].get(rob_wid, 0) + 1
-            self.user_data[target_user_id] = ud_target
+
+        if roll < success_rate:
+            # ✅ 成功：随机复制一个老婆给自己，对方保留不变
+            stolen_wid = random.choice(list(target_wives.keys()))
+            wife_info = next((w for w in self.wives_pool if str(w["id"]) == stolen_wid), None)
+            if not wife_info:
+                yield event.plain_result("❌ 找不到该角色数据！")
+                return
+
+            # 加到攻击者老婆列表
+            ud_attacker["wives"][stolen_wid] = target_wives[stolen_wid]
             self.user_data[attacker_id] = ud_attacker
             self.save_all_userdata()
-            tip = "ntr！"
-            wear = random.choice(WEAR_LIST)
-            chain = [Comp.Plain(f"{tip}\n抢到【{rob_wife['name']}】【{wear}】")]
-            img_val = rob_wife["img"]
-            if img_val:
-                if img_val.startswith(("http://", "https://")):
-                    chain.append(Comp.Image.fromURL(img_val))
-                else:
-                    img_full_path = os.path.join(ASSETS_DIR, img_val)
-                    if os.path.exists(img_full_path):
-                        chain.append(Comp.Image.fromFileSystem(img_full_path))
-            yield event.chain_result(chain)
+
+            yield event.chain_result([
+                Comp.At(qq=attacker_id),
+                Comp.Plain(" "),
+                Comp.At(qq=target_id),
+                Comp.Plain(f"\n✅ NTR成功！你牛到了【{wife_info['name']}】！")
+            ])
         else:
+            # 💔 失败：标记今日失败
+            ud_attacker["ntr_fail_date"] = today
             self.user_data[attacker_id] = ud_attacker
             self.save_all_userdata()
-            yield event.plain_result("ntr失败，黄毛被干掉了！")
+            yield event.chain_result([
+                Comp.At(qq=attacker_id),
+                Comp.Plain(f"\n💔 NTR失败！黄毛被干掉了。")
+            ])
 
     @filter.command("老婆帮助")
     async def help(self, event: AstrMessageEvent):
