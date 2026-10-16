@@ -1,0 +1,19 @@
+# PyCharm
+.idea/
+*.iml
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+venv/
+.env
+
+# 插件运行生成的数据
+data/
+*.png
+
+# 系统文件
+.DS_Store
+Thumbs.db
