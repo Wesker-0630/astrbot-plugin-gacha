@@ -1,0 +1,243 @@
+{
+  "basic": {
+    "description": "🎰 基础设置",
+    "type": "object",
+    "hint": "每日抽卡次数、角色图片目录与抽卡结果展示。修改并保存后 AstrBot 会自动热重载插件。",
+    "items": {
+      "daily_draw_limit": {
+        "description": "每日抽卡次数",
+        "type": "int",
+        "default": 3,
+        "slider": {
+          "min": 1,
+          "max": 50,
+          "step": 1
+        },
+        "hint": "每位用户每天最多可以抽卡的次数，次日自动重置。"
+      },
+      "draw_at_sender": {
+        "description": "抽卡结果 @ 抽卡人",
+        "type": "bool",
+        "default": true,
+        "hint": "开启后抽卡结果消息开头会 @ 抽卡人；WebChat 等不支持 @ 的平台可关闭。"
+      },
+      "assets_dir": {
+        "description": "角色图片目录",
+        "type": "string",
+        "default": "assets",
+        "hint": "本地角色图片所在目录。相对路径以插件目录为基准，也可以填写绝对路径；网络 URL 图片不受此设置影响。"
+      },
+      "wear_list": {
+        "description": "磨损品质列表",
+        "type": "text",
+        "default": "崭新出厂,略有磨损,久经沙场",
+        "hint": "使用英文逗号、中文逗号或分号分隔，抽卡时随机选择一个显示。"
+      },
+      "gold_color": {
+        "description": "卡片金色边框",
+        "type": "string",
+        "default": "#ffd700",
+        "hint": "十六进制颜色值，例如 #ffd700。"
+      }
+    }
+  },
+  "collection": {
+    "description": "🗂️ 收藏与图鉴",
+    "type": "object",
+    "hint": "「我的老婆」与「老婆图鉴」的排版、缩略图尺寸和数量显示。",
+    "items": {
+      "my_wife_page_size": {
+        "description": "我的老婆每页数量",
+        "type": "int",
+        "default": 16,
+        "slider": {
+          "min": 4,
+          "max": 64,
+          "step": 1
+        },
+        "hint": "每页展示的角色数量，建议与列数相乘后排版整齐。"
+      },
+      "my_wife_grid_cols": {
+        "description": "我的老婆每行列数",
+        "type": "int",
+        "default": 4,
+        "slider": {
+          "min": 1,
+          "max": 10,
+          "step": 1
+        },
+        "hint": "「我的老婆」网格每行的角色数量。"
+      },
+      "my_wife_thumb_size": {
+        "description": "我的老婆缩略图边长（像素）",
+        "type": "int",
+        "default": 500,
+        "slider": {
+          "min": 100,
+          "max": 800,
+          "step": 50
+        },
+        "hint": "数值越大图片越清晰，但生成和发送也越慢。"
+      },
+      "pool_grid_cols": {
+        "description": "老婆图鉴每行列数",
+        "type": "int",
+        "default": 10,
+        "slider": {
+          "min": 4,
+          "max": 20,
+          "step": 1
+        },
+        "hint": "「老婆图鉴」总览大图每行的角色数量。"
+      },
+      "pool_thumb_size": {
+        "description": "老婆图鉴缩略图边长（像素）",
+        "type": "int",
+        "default": 100,
+        "slider": {
+          "min": 60,
+          "max": 200,
+          "step": 10
+        },
+        "hint": "「老婆图鉴」中每个角色缩略图的边长。"
+      },
+      "pool_text_height": {
+        "description": "老婆图鉴文字区高度（像素）",
+        "type": "int",
+        "default": 38,
+        "slider": {
+          "min": 24,
+          "max": 80,
+          "step": 2
+        },
+        "hint": "每个缩略图下方用于显示 ID、名称和持有数量的高度。"
+      },
+      "show_owned_count": {
+        "description": "图鉴显示持有数量",
+        "type": "bool",
+        "default": true,
+        "hint": "开启后在「老婆图鉴」中显示每个角色的持有数量（重复卡会累计）。"
+      },
+      "gray_unowned": {
+        "description": "未拥有角色灰化",
+        "type": "bool",
+        "default": true,
+        "hint": "开启后将未收集角色的缩略图灰化，便于区分收集进度。"
+      }
+    }
+  },
+  "progress": {
+    "description": "📊 收集进度",
+    "type": "object",
+    "hint": "收集进度会同时显示在「老婆图鉴」和「收集进度」中。",
+    "items": {
+      "show_in_gallery": {
+        "description": "在老婆图鉴中显示收集进度",
+        "type": "bool",
+        "default": true,
+        "hint": "开启后「老婆图鉴」的消息文字和图片顶部都会显示已收集、收集率、累计获得和重复数量。"
+      },
+      "show_progress_bar": {
+        "description": "显示进度条",
+        "type": "bool",
+        "default": true,
+        "hint": "在「老婆图鉴」图片顶部和「收集进度」图片中绘制收集率进度条。"
+      },
+      "send_progress_image": {
+        "description": "收集进度附带图片",
+        "type": "bool",
+        "default": true,
+        "hint": "关闭后「收集进度」只发送文字，不再生成进度表格图片，可加快响应速度。"
+      }
+    }
+  },
+  "exchange": {
+    "description": "🔄 兑换",
+    "type": "object",
+    "hint": "消耗重复角色兑换未拥有角色。",
+    "items": {
+      "exchange_cost": {
+        "description": "兑换消耗数量",
+        "type": "int",
+        "default": 3,
+        "slider": {
+          "min": 1,
+          "max": 10,
+          "step": 1
+        },
+        "hint": "兑换 1 个未拥有角色需要消耗多少张相同角色。"
+      }
+    }
+  },
+  "ntr": {
+    "description": "💢 NTR 抢夺",
+    "type": "object",
+    "hint": "NTR 成功后是复制角色，对方不会损失。指定角色时成功率单独计算。",
+    "items": {
+      "ntr_enabled": {
+        "description": "启用 NTR",
+        "type": "bool",
+        "default": true,
+        "hint": "关闭后 /ntr 指令会提示功能未开启。"
+      },
+      "ntr_success_rate": {
+        "description": "随机 NTR 成功率",
+        "type": "float",
+        "default": 0.6,
+        "slider": {
+          "min": 0,
+          "max": 1,
+          "step": 0.05
+        },
+        "hint": "0.6 表示 60%。不指定角色时随机牛对方一个老婆的成功率。"
+      },
+      "ntr_target_success_rate": {
+        "description": "指定角色 NTR 成功率",
+        "type": "float",
+        "default": 0.3,
+        "slider": {
+          "min": 0,
+          "max": 1,
+          "step": 0.05
+        },
+        "hint": "0.3 表示 30%。使用 /ntr @某人 角色名 指定目标角色时的成功率。"
+      },
+      "ntr_fail_lock": {
+        "description": "NTR 失败后当天锁定",
+        "type": "bool",
+        "default": true,
+        "hint": "开启后 NTR 失败当天不能再发起 NTR，次日自动解除；关闭后可无限尝试。"
+      },
+      "ntr_send_image": {
+        "description": "NTR 成功发送角色图片",
+        "type": "bool",
+        "default": true,
+        "hint": "开启后 NTR 成功时会在消息中附带牛到的角色图片。"
+      }
+    }
+  },
+  "render": {
+    "description": "🎨 图片渲染",
+    "type": "object",
+    "hint": "生成图鉴、收藏和进度图片时使用的字体与压缩参数。",
+    "items": {
+      "font_path": {
+        "description": "字体文件",
+        "type": "string",
+        "default": "simhei.ttf",
+        "hint": "可填写字体文件名（如 simhei.ttf、msyh.ttc）或绝对路径；找不到时自动回退到系统默认字体。"
+      },
+      "jpeg_quality": {
+        "description": "JPEG 压缩质量",
+        "type": "int",
+        "default": 85,
+        "slider": {
+          "min": 50,
+          "max": 100,
+          "step": 5
+        },
+        "hint": "数值越高图片越清晰、体积越大。"
+      }
+    }
+  }
+}
