@@ -10,6 +10,8 @@
 from __future__ import annotations
 
 import asyncio
+import hashlib
+import io
 import json
 import os
 import random
@@ -18,6 +20,8 @@ import shutil
 import tempfile
 import threading
 import time
+import urllib.parse
+import urllib.request
 from datetime import date
 from typing import Any
 
@@ -303,6 +307,80 @@ def _resolve_local_image(assets_dir: str, img_val: Any) -> str | None:
     return None
 
 
+def _url_basename(url: str) -> str:
+    try:
+        path = urllib.parse.urlparse(url).path
+        return urllib.parse.unquote(os.path.basename(path))
+    except Exception:
+        return ""
+
+
+def _download_image_cached(url: str, cache_dir: str) -> str | None:
+    """下载远程图片到本地缓存，供图鉴/收藏缩略图复用。"""
+    os.makedirs(cache_dir, exist_ok=True)
+    basename = _url_basename(url)
+    ext = os.path.splitext(basename)[1].lower()
+    if ext not in {".png", ".jpg", ".jpeg", ".webp", ".gif", ".bmp"}:
+        ext = ".jpg"
+    digest = hashlib.sha256(url.encode("utf-8")).hexdigest()[:24]
+    cache_path = os.path.join(cache_dir, digest + ext)
+    if os.path.isfile(cache_path) and os.path.getsize(cache_path) > 0:
+        return cache_path
+
+    try:
+        request = urllib.request.Request(
+            url, headers={"User-Agent": "AstrBot-Gacha/1.3"}
+        )
+        with urllib.request.urlopen(request, timeout=20) as response:
+            data = response.read(20 * 1024 * 1024 + 1)
+        if not data or len(data) > 20 * 1024 * 1024:
+            logger.warning(f"[Gacha] 远程图片为空或超过 20MB：{url}")
+            return None
+        # 简单校验确实是图片，避免把错误页缓存成图片
+        with Image.open(io.BytesIO(data)) as probe:
+            probe.verify()
+        fd, temp_path = tempfile.mkstemp(
+            dir=cache_dir, prefix=".download.", suffix=ext
+        )
+        try:
+            with os.fdopen(fd, "wb") as f:
+                f.write(data)
+                f.flush()
+                os.fsync(f.fileno())
+            os.replace(temp_path, cache_path)
+        finally:
+            try:
+                if os.path.exists(temp_path):
+                    os.remove(temp_path)
+            except OSError:
+                pass
+        return cache_path
+    except Exception as exc:
+        logger.warning(f"[Gacha] 远程图片下载失败 {url}: {exc}")
+        return None
+
+
+def _resolve_render_image(
+    assets_dir: str, img_val: Any, cache_dir: str
+) -> str | None:
+    """解析图鉴缩略图：本地文件优先，否则从 CDN 下载并缓存。"""
+    local_path = _resolve_local_image(assets_dir, img_val)
+    if local_path:
+        return local_path
+
+    raw = str(img_val or "").strip()
+    if not raw.startswith(("http://", "https://")):
+        return None
+
+    # 有本地同名文件时直接使用，避免图鉴一次拉取上百张网络图
+    basename = _url_basename(raw)
+    if basename:
+        candidate = os.path.join(assets_dir, basename)
+        if os.path.isfile(candidate):
+            return candidate
+    return _download_image_cached(raw, cache_dir)
+
+
 def _load_thumb(path: str, size: int, gray: bool = False) -> Image.Image | None:
     try:
         with Image.open(path) as image:
@@ -444,6 +522,7 @@ def build_grid_image(
     thumb_size: int,
     text_height: int,
     asset_dir: str,
+    cache_dir: str,
     font_path: str = "simhei.ttf",
     quality: int = 85,
     gold_color: str = "#ffd700",
@@ -492,7 +571,7 @@ def build_grid_image(
         y0 = header_height + row * (thumb_size + text_height)
 
         thumb = None
-        local_path = _resolve_local_image(asset_dir, wife.get("img"))
+        local_path = _resolve_render_image(asset_dir, wife.get("img"), cache_dir)
         if local_path:
             thumb = _load_thumb(local_path, thumb_size, gray=False)
 
@@ -547,6 +626,7 @@ def build_pool_image(
     thumb_size: int,
     text_height: int,
     asset_dir: str,
+    cache_dir: str,
     font_path: str = "simhei.ttf",
     quality: int = 85,
     gold_color: str = "#ffd700",
@@ -619,7 +699,7 @@ def build_pool_image(
         y0 = header_height + row * (thumb_size + text_height)
 
         thumb = None
-        local_path = _resolve_local_image(asset_dir, wife.get("img"))
+        local_path = _resolve_render_image(asset_dir, wife.get("img"), cache_dir)
         if local_path:
             thumb = _load_thumb(
                 local_path, thumb_size, gray=(gray_unowned and not owned)
@@ -763,9 +843,13 @@ class WifeGachaPlugin(Star):
             raw = os.path.join(PLUGIN_ROOT, raw)
         return os.path.abspath(raw)
 
+    def image_cache_path(self) -> str:
+        return os.path.join(DATA_DIR, "image_cache")
+
     def render_options(self) -> dict[str, Any]:
         return {
             "asset_dir": self.assets_path(),
+            "cache_dir": self.image_cache_path(),
             "font_path": self.cfg_str("render", "font_path", "simhei.ttf"),
             "quality": self.cfg_int("render", "jpeg_quality", 85, 50, 100),
             "gold_color": _safe_color(

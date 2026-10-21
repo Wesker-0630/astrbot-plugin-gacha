@@ -2,802 +2,811 @@
     {
         "id": 1,
         "name": "刻晴",
-        "img": "keqing.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/keqing.png"
     },
     {
         "id": 2,
         "name": "神里绫华",
-        "img": "kamisato_ayaka.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/kamisato_ayaka.png"
     },
     {
         "id": 3,
         "name": "胡桃",
-        "img": "hutao.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/hutao.png"
     },
     {
         "id": 4,
         "name": "莫娜",
-        "img": "mona.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/mona.png"
     },
     {
         "id": 5,
         "name": "甘雨",
-        "img": "ganyu.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/ganyu.png"
     },
     {
         "id": 6,
         "name": "芙宁娜",
-        "img": "funinna.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/funinna.png"
     },
     {
         "id": 7,
         "name": "芭芭拉",
-        "img": "babara.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/babara.png"
     },
     {
         "id": 8,
         "name": "雷电将军",
-        "img": "raiden_shogun.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/raiden_shogun.png"
     },
     {
         "id": 9,
         "name": "八重神子",
-        "img": "guuji_yae.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/guuji_yae.png"
     },
     {
         "id": 10,
         "name": "安柏",
-        "img": "amber.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/amber.png"
     },
     {
         "id": 11,
         "name": "丽莎",
-        "img": "lisa.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/lisa.png"
     },
     {
         "id": 12,
         "name": "珊瑚宫心海",
-        "img": "kokomi.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/kokomi.png"
     },
     {
         "id": 13,
         "name": "云堇",
-        "img": "yunjin.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/yunjin.png"
     },
     {
         "id": 14,
         "name": "夜兰",
-        "img": "yelan.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/yelan.png"
     },
     {
         "id": 15,
         "name": "菲谢尔",
-        "img": "philan.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/philan.png"
     },
     {
         "id": 16,
         "name": "莱依拉",
-        "img": "layla.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/layla.png"
     },
     {
         "id": 17,
         "name": "千织",
-        "img": "chiori.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/chiori.png"
     },
     {
         "id": 18,
         "name": "克洛琳德",
-        "img": "clorinde.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/clorinde.png"
     },
     {
         "id": 19,
         "name": "琳妮特",
-        "img": "lynette.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/lynette.png"
     },
     {
         "id": 20,
         "name": "奥黛塔",
-        "img": "odette.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/odette.png"
     },
     {
         "id": 21,
         "name": "宵宫",
-        "img": "yoimiya.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/yoimiya.png"
     },
     {
         "id": 22,
         "name": "薇斯纳",
-        "img": "wisna.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/wisna.png"
     },
     {
         "id": 23,
         "name": "三月七",
-        "img": "sanyueqi.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/sanyueqi.png"
     },
     {
         "id": 24,
         "name": "黑塔",
-        "img": "heta.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/heta.png"
     },
     {
         "id": 25,
         "name": "大黑塔",
-        "img": "daheta.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/daheta.png"
     },
     {
         "id": 26,
         "name": "绯英",
-        "img": "feiying.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/feiying.png"
     },
     {
         "id": 27,
         "name": "风堇",
-        "img": "fengjin.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/fengjin.png"
     },
     {
         "id": 28,
         "name": "昔涟",
-        "img": "xilian.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/xilian.png"
     },
     {
         "id": 29,
         "name": "遐蝶",
-        "img": "xiadie.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/xiadie.png"
     },
     {
         "id": 30,
         "name": "流萤",
-        "img": "liuying.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/liuying.png"
     },
     {
         "id": 31,
         "name": "符玄",
-        "img": "fuxuan.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/fuxuan.png"
     },
     {
         "id": 32,
         "name": "布洛妮娅·兰德",
-        "img": "buluoniya_lande.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/buluoniya_lande.png"
     },
     {
         "id": 33,
         "name": "阮梅",
-        "img": "ruanmei.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/ruanmei.png"
     },
     {
         "id": 34,
         "name": "知更鸟",
-        "img": "zhigengniao.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/zhigengniao.png"
     },
     {
         "id": 35,
         "name": "云璃",
-        "img": "yunli.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/yunli.png"
     },
     {
         "id": 36,
         "name": "卡芙卡",
-        "img": "kafka.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/kafka.png"
     },
     {
         "id": 37,
         "name": "黄泉",
-        "img": "huangquan.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/huangquan.png"
     },
     {
         "id": 38,
         "name": "镜流",
-        "img": "jingliu.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/jingliu.png"
     },
     {
         "id": 39,
         "name": "花火",
-        "img": "huahuo.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/huahuo.png"
     },
     {
         "id": 40,
         "name": "海瑟音",
-        "img": "hysilens.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/hysilens.png"
     },
     {
         "id": 41,
         "name": "黑天鹅",
-        "img": "heitiane.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/heitiane.png"
     },
     {
         "id": 42,
         "name": "银狼",
-        "img": "yinlang.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/yinlang.png"
     },
     {
         "id": 43,
         "name": "藿藿",
-        "img": "huohuo.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/huohuo.png"
     },
     {
         "id": 44,
         "name": "大丽花",
-        "img": "dalihua.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/dalihua.png"
     },
     {
         "id": 45,
         "name": "阿格莱雅",
-        "img": "aglaea.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/aglaea.png"
     },
     {
         "id": 46,
         "name": "青雀",
-        "img": "qingque.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/qingque.png"
     },
     {
         "id": 47,
         "name": "佩拉",
-        "img": "pela.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/pela.png"
     },
     {
         "id": 48,
         "name": "桂乃芬",
-        "img": "guinaifen.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/guinaifen.png"
     },
     {
         "id": 49,
         "name": "姬子",
-        "img": "himeko.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/himeko.png"
     },
     {
         "id": 50,
         "name": "灵砂",
-        "img": "lingsha.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/lingsha.png"
     },
     {
         "id": 51,
         "name": "阿尔托莉雅·潘德拉贡",
-        "img": "artoria.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/artoria.png"
     },
     {
         "id": 52,
         "name": "爱尔奎特",
-        "img": "arcueid.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/arcueid.png"
     },
     {
         "id": 53,
         "name": "两仪式",
-        "img": "shiki_ryougi.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/shiki_ryougi.png"
     },
     {
         "id": 54,
         "name": "苍崎青子",
-        "img": "aoko_aozaki.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/aoko_aozaki.png"
     },
     {
         "id": 55,
         "name": "尼禄·克劳狄乌斯",
-        "img": "nero_claudius.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/nero_claudius.png"
     },
     {
         "id": 56,
         "name": "玛修",
-        "img": "maxiu.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/maxiu.png"
     },
     {
         "id": 57,
         "name": "阿尔托莉雅·潘德拉贡[alter]",
-        "img": "artoria[alter].png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/artoria%5Balter%5D.png"
     },
     {
         "id": 58,
         "name": "远坂凛",
-        "img": "rin_tosaka.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/rin_tosaka.png"
     },
     {
         "id": 59,
         "name": "间桐樱",
-        "img": "sakura_matou.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/sakura_matou.png"
     },
     {
         "id": 60,
         "name": "贞德",
-        "img": "Jeanne.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/Jeanne.png"
     },
     {
         "id": 61,
         "name": "玉藻前",
-        "img": "tamamonomae.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/tamamonomae.png"
     },
     {
         "id": 62,
         "name": "大黑塔",
-        "img": "daheita.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/daheita.png"
     },
     {
         "id": 63,
         "name": "清姬",
-        "img": "qingji.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/qingji.png"
     },
     {
         "id": 64,
         "name": "冲田总司",
-        "img": "chongtianzongsi.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/chongtianzongsi.png"
     },
     {
         "id": 65,
         "name": "斯卡哈",
-        "img": "bba.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/bba.png"
     },
     {
         "id": 66,
         "name": "酒吞童子",
-        "img": "jiutun.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/jiutun.png"
     },
     {
         "id": 67,
         "name": "达芬奇",
-        "img": "dafenqi.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/dafenqi.png"
     },
     {
         "id": 68,
         "name": "伊莉雅",
-        "img": "iria.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/iria.png"
     },
     {
         "id": 69,
         "name": "伊什塔尔",
-        "img": "yishitaer.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/yishitaer.png"
     },
     {
         "id": 70,
         "name": "宫本武藏",
-        "img": "gongbenwuzang.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/gongbenwuzang.png"
     },
     {
         "id": 71,
         "name": "弗兰肯斯坦",
-        "img": "fulankensitan.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/fulankensitan.png"
     },
     {
         "id": 72,
         "name": "织田信长",
-        "img": "zhitianxinchang.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/zhitianxinchang.png"
     },
     {
         "id": 73,
         "name": "阿比盖尔·威廉姆斯",
-        "img": "abigaier.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/abigaier.png"
     },
     {
         "id": 74,
         "name": "埃列什基伽勒",
-        "img": "ailieshitajile.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/ailieshitajile.png"
     },
     {
         "id": 75,
         "name": "葛饰北斋",
-        "img": "geshibeizhai.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/geshibeizhai.png"
     },
     {
         "id": 76,
         "name": "浅上藤乃",
-        "img": "qianshangtengnai.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/qianshangtengnai.png"
     },
     {
         "id": 77,
         "name": "阿纳斯塔西娅",
-        "img": "anasitaxiya.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/anasitaxiya.png"
     },
     {
         "id": 78,
         "name": "斯卡哈·斯卡蒂",
-        "img": "skadi.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/skadi.png"
     },
     {
         "id": 79,
         "name": "迦摩",
-        "img": "jiamo.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/jiamo.png"
     },
     {
         "id": 80,
         "name": "达芬奇[lily]",
-        "img": "dafenqi_lily.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/dafenqi_lily.png"
     },
     {
         "id": 81,
         "name": "杨贵妃",
-        "img": "yangguifei.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/yangguifei.png"
     },
     {
         "id": 82,
         "name": "溶解莉莉丝",
-        "img": "rongjielilisi.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/rongjielilisi.png"
     },
     {
         "id": 83,
         "name": "清少纳言",
-        "img": "qingshaonayan.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/qingshaonayan.png"
     },
     {
         "id": 84,
         "name": "阿尔托莉雅[Caster]",
-        "img": "c_dai.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/c_dai.png"
     },
     {
         "id": 85,
         "name": "杀生院祈荒",
-        "img": "shashengyuanqihuang.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/shashengyuanqihuang.png"
     },
     {
         "id": 86,
         "name": "布伦希尔德",
-        "img": "bulunxierde.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/bulunxierde.png"
     },
     {
         "id": 87,
         "name": "紫式部",
-        "img": "zishibu.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/zishibu.png"
     },
     {
         "id": 88,
         "name": "巴御前",
-        "img": "bayuqian.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/bayuqian.png"
     },
     {
         "id": 89,
         "name": "伊吹童子",
-        "img": "yichuitongzi.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/yichuitongzi.png"
     },
     {
         "id": 90,
         "name": "卡莲",
-        "img": "kalian.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/kalian.png"
     },
     {
         "id": 91,
         "name": "摩根",
-        "img": "morgan.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/morgan.png"
     },
     {
         "id": 92,
         "name": "芭万·系",
-        "img": "yaocui.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/yaocui.png"
     },
     {
         "id": 93,
         "name": "梅柳弃娜",
-        "img": "yaolan.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/yaolan.png"
     },
     {
         "id": 94,
         "name": "光之高扬斯卡娅",
-        "img": "shahu.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/shahu.png"
     },
     {
         "id": 95,
         "name": "雅克·德·莫莱",
-        "img": "de_molai.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/de_molai.png"
     },
     {
         "id": 96,
         "name": "伊丽莎白·巴托里",
-        "img": "yilishabai_batuoli.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/yilishabai_batuoli.png"
     },
     {
         "id": 97,
         "name": "阿瓦隆女士",
-        "img": "meili.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/meili.png"
     },
     {
         "id": 98,
         "name": "提亚马特",
-        "img": "tiyamate.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/tiyamate.png"
     },
     {
         "id": 99,
         "name": "久远寺有珠",
-        "img": "jiuyuansi.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/jiuyuansi.png"
     },
     {
         "id": 100,
         "name": "莉莉丝",
-        "img": "lilisi.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/lilisi.png"
     },
     {
         "id": 101,
         "name": "奥尔加玛丽",
-        "img": "aoerjiamali.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/aoerjiamali.png"
     },
     {
         "id": 102,
         "name": "能天使",
-        "img": "exusiai.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/exusiai.png"
     },
     {
         "id": 103,
         "name": "阿米娅",
-        "img": "amiya.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/amiya.png"
     },
     {
         "id": 104,
         "name": "佩丽卡",
-        "img": "tihu.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/tihu.png"
     },
     {
         "id": 105,
         "name": "陈千雨",
-        "img": "chenqianyu.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/chenqianyu.png"
     },
     {
         "id": 106,
         "name": "高松灯",
-        "img": "chouqie.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/chouqie.png"
     },
     {
         "id": 107,
         "name": "千早爱音",
-        "img": "anon.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/anon.png"
     },
     {
         "id": 108,
         "name": "椎名立希",
-        "img": "zhuiminglixi.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/zhuiminglixi.png"
     },
     {
         "id": 109,
         "name": "长崎素世",
-        "img": "soyo.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/soyo.png"
     },
     {
         "id": 110,
         "name": "要乐奈",
-        "img": "yaolenai.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/yaolenai.png"
     },
     {
         "id": 111,
         "name": "丰川祥子",
-        "img": "fengchuanxiangzi.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/fengchuanxiangzi.png"
     },
     {
         "id": 112,
         "name": "三角初华",
-        "img": "chuhua.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/chuhua.png"
     },
     {
         "id": 113,
         "name": "祐天寺若麦",
-        "img": "miaomeng.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/miaomeng.png"
     },
     {
         "id": 114,
         "name": "若叶睦",
-        "img": "muzumi.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/muzumi.png"
     },
     {
         "id": 115,
         "name": "八幡海铃",
-        "img": "hailing.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/hailing.png"
     },
     {
         "id": 116,
         "name": "博丽灵梦",
-        "img": "reimu.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/reimu.png"
     },
     {
         "id": 117,
         "name": "雾雨魔理沙",
-        "img": "marisa.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/marisa.png"
     },
     {
         "id": 118,
         "name": "露米娅",
-        "img": "rumia.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/rumia.png"
     },
     {
         "id": 119,
         "name": "大妖精",
-        "img": "Daiyousei.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/Daiyousei.png"
     },
     {
         "id": 120,
         "name": "琪露诺",
-        "img": "chirno.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/chirno.png"
     },
     {
         "id": 121,
         "name": "红美铃",
-        "img": "hongmeiling.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/hongmeiling.png"
     },
     {
         "id": 122,
         "name": "小恶魔",
-        "img": "Koakuma.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/Koakuma.png"
     },
     {
         "id": 123,
         "name": "帕秋莉·诺蕾姬",
-        "img": "muq.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/muq.png"
     },
     {
         "id": 124,
         "name": "十六夜咲夜",
-        "img": "sakuya.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/sakuya.png"
     },
     {
         "id": 125,
         "name": "蕾蒂·霍瓦特洛克",
-        "img": "Letty_Whiterock.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/Letty_Whiterock.png"
     },
     {
         "id": 126,
         "name": "橙",
-        "img": "Chen.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/Chen.png"
     },
     {
         "id": 127,
         "name": "爱丽丝·玛格特洛依德",
-        "img": "Alice_Margatroid.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/Alice_Margatroid.png"
     },
     {
         "id": 128,
         "name": "莉莉霍瓦特",
-        "img": "Lilywhite.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/Lilywhite.png"
     },
     {
         "id": 129,
         "name": "普莉兹姆利巴三姐妹",
-        "img": "Prismriver.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/Prismriver.png"
     },
     {
         "id": 130,
         "name": "魂魄妖梦",
-        "img": "youmu.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/youmu.png"
     },
     {
         "id": 131,
         "name": "西行寺幽幽子",
-        "img": "Yuyuko.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/Yuyuko.png"
     },
     {
         "id": 132,
         "name": "八云蓝",
-        "img": "Yakumo_Ran.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/Yakumo_Ran.png"
     },
     {
         "id": 133,
         "name": "八云紫",
-        "img": "Yakumo_Yukari.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/Yakumo_Yukari.png"
     },
     {
         "id": 134,
         "name": "伊吹萃香",
-        "img": "Suika.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/Suika.png"
     },
     {
         "id": 135,
         "name": "莉格露·奈特巴格",
-        "img": "Wriggle_Nightbug.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/Wriggle_Nightbug.png"
     },
     {
         "id": 136,
         "name": "米斯蒂娅·萝蕾拉",
-        "img": "Mystia_Lorelei.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/Mystia_Lorelei.png"
     },
     {
         "id": 137,
         "name": "上白泽慧音",
-        "img": "Kamishirasawa_Keine.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/Kamishirasawa_Keine.png"
     },
     {
         "id": 138,
         "name": "因幡天为",
-        "img": "Inaba_Tewi.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/Inaba_Tewi.png"
     },
     {
         "id": 139,
         "name": "铃仙·优昙华院·因幡",
-        "img": "Reisen_Udongein_Inaba.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/Reisen_Udongein_Inaba.png"
     },
     {
         "id": 140,
         "name": "八意永琳",
-        "img": "Yagokoro_Eirin.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/Yagokoro_Eirin.png"
     },
     {
         "id": 141,
         "name": "蓬莱山辉夜",
-        "img": "Houraisan_Kaguya.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/Houraisan_Kaguya.png"
     },
     {
         "id": 142,
         "name": "藤原妹红",
-        "img": "Huziwara_no_Mokou.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/Huziwara_no_Mokou.png"
     },
     {
         "id": 143,
         "name": "梅蒂欣·梅兰可莉",
-        "img": "Medicine_Melancholy.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/Medicine_Melancholy.png"
     },
     {
         "id": 144,
         "name": "风见幽香",
-        "img": "Kazami_Yuka.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/Kazami_Yuka.png"
     },
     {
         "id": 145,
         "name": "小野塚小町",
-        "img": "Onozuka_Komachi.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/Onozuka_Komachi.png"
     },
     {
         "id": 146,
         "name": "四季映姬·夜摩仙那度",
-        "img": "Shikieiki_Yamaxanadu.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/Shikieiki_Yamaxanadu.png"
     },
     {
         "id": 147,
         "name": "蕾米莉亚·斯卡蕾特",
-        "img": "Remilia_Scarlet.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/Remilia_Scarlet.png"
     },
     {
         "id": 148,
         "name": "芙兰朵露·斯卡蕾特",
-        "img": "Flandre_Scarlet.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/Flandre_Scarlet.png"
     },
     {
         "id": 149,
         "name": "秋静叶",
-        "img": "Aki_Sizuha.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/Aki_Sizuha.png"
     },
     {
         "id": 150,
         "name": "秋穰子",
-        "img": "Aki_Minoriko.png"
-    },{
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/Aki_Minoriko.png"
+    },
+    {
         "id": 151,
         "name": "键山雏",
-        "img": "Kagiyama_Hina.png"
-    },{
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/Kagiyama_Hina.png"
+    },
+    {
         "id": 152,
         "name": "河城荷取",
-        "img": "Kawasiro_Nitori.png"
-    },{
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/Kawasiro_Nitori.png"
+    },
+    {
         "id": 153,
         "name": "犬走椛",
-        "img": "Inubashiri_Momizi.png"
-    },{
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/Inubashiri_Momizi.png"
+    },
+    {
         "id": 154,
         "name": "射命丸文",
-        "img": "Shameimaru_Aya.png"
-    },{
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/Shameimaru_Aya.png"
+    },
+    {
         "id": 155,
         "name": "东风谷早苗",
-        "img": "Kochiya_Sanae.png"
-    },{
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/Kochiya_Sanae.png"
+    },
+    {
         "id": 156,
         "name": "八坂神奈子",
-        "img": "Yasaka_Kanako.png"
-    },{
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/Yasaka_Kanako.png"
+    },
+    {
         "id": 157,
         "name": "洩矢诹访子",
-        "img": "Moriya_Suwako.png"
-    },{
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/Moriya_Suwako.png"
+    },
+    {
         "id": 158,
         "name": "永江衣玖",
-        "img": "Nagae_Iku.png"
-    },{
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/Nagae_Iku.png"
+    },
+    {
         "id": 159,
         "name": "比那名居天子",
-        "img": "Hinanawi_Tenshi.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/Hinanawi_Tenshi.png"
     },
     {
         "id": 160,
         "name": "秦心",
-        "img": "Hata_no_Kokoro.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/Hata_no_Kokoro.png"
     },
     {
         "id": 161,
         "name": "古明地恋",
-        "img": "Komeiji_Koishi.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/Komeiji_Koishi.png"
     },
     {
         "id": 162,
         "name": "苏我屠自古",
-        "img": "Soga_no_Toziko.png"
+        "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/Soga_no_Toziko.png"
     }
 ]

@@ -13,6 +13,8 @@ venv/
 # 插件运行生成的数据
 data/
 *.png
+# 卡池图片需要提交到 GitHub，供 jsDelivr CDN 使用
+!assets/*.png
 
 # 系统文件
 .DS_Store

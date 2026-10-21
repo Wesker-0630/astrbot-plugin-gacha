@@ -22,10 +22,10 @@
         "hint": "开启后抽卡结果消息开头会 @ 抽卡人；WebChat 等不支持 @ 的平台可关闭。"
       },
       "assets_dir": {
-        "description": "角色图片目录",
+        "description": "本地图片兜底目录",
         "type": "string",
         "default": "assets",
-        "hint": "本地角色图片所在目录。相对路径以插件目录为基准，也可以填写绝对路径；网络 URL 图片不受此设置影响。"
+        "hint": "图鉴缩略图优先使用此目录中的同名图片以加速；当 wives.json 的 img 是完整 CDN URL 且本地没有同名文件时，会自动下载到 data/image_cache 缓存。相对路径以插件目录为基准，也可以填写绝对路径。"
       },
       "wear_list": {
         "description": "磨损品质列表",
