@@ -47,6 +47,14 @@ DRAW_PATTERN = r"^(?:\s*@.*?\(\d+\)\s*)*/?\s*抽老婆\s*$"
 # 默认值兜底（真正的默认值以 _conf_schema.json 为准）
 FALLBACK_WEAR_LIST = ["崭新出厂", "略有磨损", "久经沙场"]
 
+# jsDelivr 多 CDN 节点。部分网络会阻断 cdn.jsdelivr.net，gcore 节点通常可直连。
+JSDELIVR_HOSTS = (
+    "gcore.jsdelivr.net",
+    "fastly.jsdelivr.net",
+    "jsdelivr.b-cdn.net",
+    "cdn.jsdelivr.net",
+)
+
 _SAVE_LOCK = threading.RLock()
 
 
@@ -315,49 +323,88 @@ def _url_basename(url: str) -> str:
         return ""
 
 
+def _jsdelivr_url_candidates(url: str) -> list[str]:
+    """为 jsDelivr URL 生成多节点候选，原节点优先。"""
+    try:
+        parsed = urllib.parse.urlsplit(url)
+    except Exception:
+        return [url]
+    host = (parsed.hostname or "").lower()
+    if host not in JSDELIVR_HOSTS:
+        return [url]
+
+    ordered = [host] + [item for item in JSDELIVR_HOSTS if item != host]
+    candidates: list[str] = []
+    for item in ordered:
+        netloc = item if parsed.port is None else f"{item}:{parsed.port}"
+        candidates.append(
+            urllib.parse.urlunsplit(
+                (parsed.scheme or "https", netloc, parsed.path, parsed.query, "")
+            )
+        )
+    return candidates
+
+
+def _cache_key_url(url: str) -> str:
+    """让 jsDelivr 各节点共用同一份缓存。"""
+    try:
+        parsed = urllib.parse.urlsplit(url)
+    except Exception:
+        return url
+    if (parsed.hostname or "").lower() in JSDELIVR_HOSTS:
+        return urllib.parse.urlunsplit(
+            ("https", "cdn.jsdelivr.net", parsed.path, parsed.query, "")
+        )
+    return url
+
+
 def _download_image_cached(url: str, cache_dir: str) -> str | None:
-    """下载远程图片到本地缓存，供图鉴/收藏缩略图复用。"""
+    """下载远程图片到本地缓存；jsDelivr 节点失败时自动切换其他节点。"""
     os.makedirs(cache_dir, exist_ok=True)
     basename = _url_basename(url)
     ext = os.path.splitext(basename)[1].lower()
     if ext not in {".png", ".jpg", ".jpeg", ".webp", ".gif", ".bmp"}:
         ext = ".jpg"
-    digest = hashlib.sha256(url.encode("utf-8")).hexdigest()[:24]
+    digest = hashlib.sha256(_cache_key_url(url).encode("utf-8")).hexdigest()[:24]
     cache_path = os.path.join(cache_dir, digest + ext)
     if os.path.isfile(cache_path) and os.path.getsize(cache_path) > 0:
         return cache_path
 
-    try:
-        request = urllib.request.Request(
-            url, headers={"User-Agent": "AstrBot-Gacha/1.3"}
-        )
-        with urllib.request.urlopen(request, timeout=20) as response:
-            data = response.read(20 * 1024 * 1024 + 1)
-        if not data or len(data) > 20 * 1024 * 1024:
-            logger.warning(f"[Gacha] 远程图片为空或超过 20MB：{url}")
-            return None
-        # 简单校验确实是图片，避免把错误页缓存成图片
-        with Image.open(io.BytesIO(data)) as probe:
-            probe.verify()
-        fd, temp_path = tempfile.mkstemp(
-            dir=cache_dir, prefix=".download.", suffix=ext
-        )
+    last_error: Exception | None = None
+    for candidate in _jsdelivr_url_candidates(url):
         try:
-            with os.fdopen(fd, "wb") as f:
-                f.write(data)
-                f.flush()
-                os.fsync(f.fileno())
-            os.replace(temp_path, cache_path)
-        finally:
+            request = urllib.request.Request(
+                candidate, headers={"User-Agent": "AstrBot-Gacha/1.3.1"}
+            )
+            with urllib.request.urlopen(request, timeout=12) as response:
+                data = response.read(20 * 1024 * 1024 + 1)
+            if not data or len(data) > 20 * 1024 * 1024:
+                raise ValueError("empty or larger than 20MB")
+            # 简单校验确实是图片，避免把错误页缓存成图片
+            with Image.open(io.BytesIO(data)) as probe:
+                probe.verify()
+            fd, temp_path = tempfile.mkstemp(
+                dir=cache_dir, prefix=".download.", suffix=ext
+            )
             try:
-                if os.path.exists(temp_path):
-                    os.remove(temp_path)
-            except OSError:
-                pass
-        return cache_path
-    except Exception as exc:
-        logger.warning(f"[Gacha] 远程图片下载失败 {url}: {exc}")
-        return None
+                with os.fdopen(fd, "wb") as f:
+                    f.write(data)
+                    f.flush()
+                    os.fsync(f.fileno())
+                os.replace(temp_path, cache_path)
+            finally:
+                try:
+                    if os.path.exists(temp_path):
+                        os.remove(temp_path)
+                except OSError:
+                    pass
+            return cache_path
+        except Exception as exc:
+            last_error = exc
+            continue
+
+    logger.warning(f"[Gacha] 远程图片下载失败 {url}: {last_error}")
+    return None
 
 
 def _resolve_render_image(
@@ -983,28 +1030,45 @@ class WifeGachaPlugin(Star):
             return fuzzy[0], []
         return None, fuzzy
 
-    def _image_component(self, img_val: Any) -> Comp.Image | None:
+    async def _image_component(self, img_val: Any) -> Comp.Image | None:
         raw = str(img_val or "").strip()
         if not raw:
             return None
+
+        path: str | None = None
         if raw.startswith(("http://", "https://")):
+            # 先把 CDN URL 解析成本地文件/缓存再发送。
+            # AstrBot 的 aiohttp 下载不一定走系统代理，直接传 URL 在部分网络会发送失败。
             try:
-                return Comp.Image.fromURL(raw)
+                path = await asyncio.to_thread(
+                    _resolve_render_image,
+                    self.assets_path(),
+                    raw,
+                    self.image_cache_path(),
+                )
             except Exception as exc:
-                self.logger.warning(f"[Gacha] 网络图片无效 {raw}: {exc}")
+                self.logger.warning(f"[Gacha] 远程图片解析失败 {raw}: {exc}")
+            if not path:
+                # 最后兜底仍尝试直接发 URL；平台能下载时仍可成功
+                try:
+                    return Comp.Image.fromURL(raw)
+                except Exception as exc:
+                    self.logger.warning(f"[Gacha] 网络图片无效 {raw}: {exc}")
+                    return None
+        else:
+            path = _resolve_local_image(self.assets_path(), raw)
+            if not path:
+                self.logger.warning(f"[Gacha] 图片不存在：{raw}")
                 return None
-        path = _resolve_local_image(self.assets_path(), raw)
-        if not path:
-            self.logger.warning(f"[Gacha] 图片不存在：{raw}")
-            return None
+
         try:
             return Comp.Image.fromFileSystem(path)
         except Exception as exc:
             self.logger.warning(f"[Gacha] 图片加载失败 {path}: {exc}")
             return None
 
-    def _append_image(self, chain: list, img_val: Any) -> None:
-        component = self._image_component(img_val)
+    async def _append_image(self, chain: list, img_val: Any) -> None:
+        component = await self._image_component(img_val)
         if component is not None:
             chain.append(component)
 
@@ -1138,7 +1202,7 @@ class WifeGachaPlugin(Star):
             chain.append(Comp.Plain("\n" + body))
         else:
             chain.append(Comp.Plain(body))
-        self._append_image(chain, picked.get("img"))
+        await self._append_image(chain, picked.get("img"))
         yield event.chain_result(chain)
 
     # ------------------------------------------------------------------
@@ -1174,7 +1238,7 @@ class WifeGachaPlugin(Star):
             f"（{stats['percent']:.1f}%）"
         )
         chain: list = [Comp.Plain(text_msg)]
-        self._append_image(chain, target_wife.get("img"))
+        await self._append_image(chain, target_wife.get("img"))
         yield event.chain_result(chain)
 
     # ------------------------------------------------------------------
@@ -1367,7 +1431,7 @@ class WifeGachaPlugin(Star):
                 f"📊 {self._progress_text(stats)}"
             )
         ]
-        self._append_image(chain, new_wife.get("img"))
+        await self._append_image(chain, new_wife.get("img"))
         yield event.chain_result(chain)
 
     # ------------------------------------------------------------------
@@ -1495,7 +1559,7 @@ class WifeGachaPlugin(Star):
                 Comp.Plain(text),
             ]
             if self.cfg_bool("ntr", "ntr_send_image", True):
-                self._append_image(chain, wife_info.get("img"))
+                await self._append_image(chain, wife_info.get("img"))
             yield event.chain_result(chain)
         else:
             if self.cfg_bool("ntr", "ntr_fail_lock", True):

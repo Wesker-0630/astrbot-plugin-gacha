@@ -5,7 +5,7 @@
 ## 功能特性
 
 - 🎰 **每日抽卡**：每日次数可在 WebUI 配置，随机抽取卡池角色，包含 3 种磨损品质
-- 🌐 **图片 CDN**：卡池图片使用 GitHub + jsDelivr，`wives.json` 直接保存完整 URL，不再依赖本地图片路径；本地 `assets/` 仅作为缩略图加速与兜底
+- 🌐 **图片 CDN**：卡池图片使用 GitHub + jsDelivr（gcore 节点），`wives.json` 直接保存完整 URL，不再依赖本地图片路径；本地 `assets/` 仅作为缩略图加速与兜底
 - 🔁 **重复卡累计**：抽到已拥有的角色会累加持有数量，抽卡结果直接显示「持有×N」
 - 📜 **老婆图鉴（含收集进度）**：一次性生成全部角色总览大图，未拥有角色自动灰化；消息和图片顶部都会显示已收集、收集率、累计获得、重复数量与进度条
 - 📊 **收集进度**：独立进度表格图片，显示已收集 / 总数 / 收集率 / 累计获得 / 重复获得 / 累计抽卡
@@ -22,7 +22,7 @@
 astrbot_plugin_gacha/
 ├── main.py                 # 插件主代码
 ├── _conf_schema.json       # WebUI 可视化配置 schema
-├── wives.json              # 卡池角色配置（图片为 jsDelivr URL）
+├── wives.json              # 卡池角色配置（图片为 jsDelivr gcore URL）
 ├── assets/                 # 卡池图片（已提交到 GitHub，供 jsDelivr CDN 使用）
 └── data/                   # 用户存档目录（自动创建）
     ├── user_data.json      # 用户收集记录
@@ -35,20 +35,20 @@ astrbot_plugin_gacha/
 
 1. 将插件文件夹放到 AstrBot 的 `plugins` 目录
 2. 首次启动自动创建 `data/` 等目录；`assets/` 中的图片随仓库提供
-3. 卡池图片默认使用 jsDelivr CDN URL，不依赖本地图片也能正常发图；本地 `assets/` 用于图鉴缩略图加速与兜底
+3. 卡池图片默认使用 jsDelivr CDN（gcore 节点）URL，不依赖本地图片也能正常发图；本地 `assets/` 用于图鉴缩略图加速与兜底
 4. 在 AstrBot 管理界面加载 / 重载插件
 5. 打开 AstrBot WebUI → 插件管理 → 抽老婆插件 → 配置，即可看到可视化配置项
 
 ## 角色配置（wives.json）
 
-卡池图片已改为 **GitHub + jsDelivr CDN**，`img` 直接保存完整 URL：
+卡池图片已改为 **GitHub + jsDelivr CDN**（使用可直连的 `gcore.jsdelivr.net` 节点），`img` 直接保存完整 URL：
 
 ```json
 [
   {
     "id": 1,
     "name": "角色名称",
-    "img": "https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/keqing.png"
+    "img": "https://gcore.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/keqing.png"
   },
   {
     "id": 2,
@@ -60,16 +60,21 @@ astrbot_plugin_gacha/
 
 - `id`：角色唯一 ID，自动递增
 - `name`：角色名称
-- `img`：**完整图片 URL**（推荐 jsDelivr CDN）；也兼容本地文件名作为兜底
+- `img`：**完整图片 URL**（推荐 jsDelivr gcore 节点）；也兼容本地文件名作为兜底
 
 ### 新增角色图片
 
 1. 把图片放到 `assets/`；
 2. 提交并推送到 GitHub `main`；
-3. 使用 `https://cdn.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/<文件名>`；
+3. 使用 `https://gcore.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/<文件名>`；
 4. 文件名含 `[]`、空格等字符时做 URL 编码，例如 `artoria[alter].png` → `artoria%5Balter%5D.png`；
 5. 修改 `wives.json` 后在 WebUI 重载插件。
 
+> 部分网络会阻断 `cdn.jsdelivr.net`，本项目使用可直连的 `gcore.jsdelivr.net`。
+> 插件下载器还会在 `gcore` / `fastly` / `b-cdn` / `cdn` 节点之间自动回退。
+> 直接发图时，插件会先把 CDN URL 解析为本地文件或 `data/image_cache/` 缓存再发送，
+> 避免 AstrBot 的 aiohttp 不走系统代理导致发送失败。
+>
 > jsDelivr 会缓存 `@main` 分支。更新图片后若仍显示旧图，可访问
 > `https://purge.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/<文件名>`
 > 刷新缓存，或改用**完整 commit hash** / tag 的 URL。
@@ -181,12 +186,14 @@ astrbot_plugin_gacha/
 - ✅ NTR 解析 At 时跳过机器人自身，避免 @机器人 后接指令时误判
 - ✅ 移除调试用 `print`，统一使用插件日志
 - ✅ 卡池图片切换为 GitHub + jsDelivr CDN，`wives.json` 使用完整 URL
+- ✅ 使用可直连的 `gcore.jsdelivr.net` 节点，并在 gcore/fastly/b-cdn/cdn 之间自动回退
 - ✅ 图鉴缩略图支持远程 URL：本地同名图片优先，缺失时下载到 `data/image_cache/` 缓存
+- ✅ 直接发图前把 CDN URL 解析为本地文件/缓存，避免 AstrBot 的 aiohttp 不走系统代理导致发送失败
 
 ## 注意事项
 
 - 图片读取失败时会显示「图片缺失」占位，不影响其他角色
-- 直接发图使用 `wives.json` 中的 URL；图鉴缩略图会优先使用本地 `assets/` 同名文件，缺失时自动下载到 `data/image_cache/`
+- 直接发图使用 `wives.json` 中的 URL；插件会先解析为本地 `assets/` 同名文件或 `data/image_cache/` 缓存再发送
 - 如果删除本地 `assets/` 以做成纯 CDN 部署，首次生成图鉴会逐张下载并缓存，可能较慢；之后会复用缓存
 - `assets/` 是 jsDelivr 的源文件，**不要从 GitHub 仓库删除并推送**，否则 CDN 链接会 404；本地部署节省空间时请只清理不推送的副本
 - 生成的大图为 JPEG 压缩保存，降低体积便于 QQ 发送
