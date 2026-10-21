@@ -1049,12 +1049,12 @@ class WifeGachaPlugin(Star):
             except Exception as exc:
                 self.logger.warning(f"[Gacha] 远程图片解析失败 {raw}: {exc}")
             if not path:
-                # 最后兜底仍尝试直接发 URL；平台能下载时仍可成功
-                try:
-                    return Comp.Image.fromURL(raw)
-                except Exception as exc:
-                    self.logger.warning(f"[Gacha] 网络图片无效 {raw}: {exc}")
-                    return None
+                # 本地没有同名图，且所有 CDN 节点都下载失败：
+                # 跳过图片而不是把裸 URL 交给平台，避免整条消息链发送失败。
+                self.logger.warning(
+                    f"[Gacha] 图片无法下载且本地无同名文件，跳过图片：{raw}"
+                )
+                return None
         else:
             path = _resolve_local_image(self.assets_path(), raw)
             if not path:
