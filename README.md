@@ -72,7 +72,7 @@ astrbot_plugin_gacha/
 
 > jsDelivr 会缓存 `@main` 分支。更新图片后若仍显示旧图，可访问
 > `https://purge.jsdelivr.net/gh/Wesker-0630/astrbot-plugin-gacha@main/assets/<文件名>`
-> 刷新缓存，或改用具体 commit / tag 的 URL。
+> 刷新缓存，或改用**完整 commit hash** / tag 的 URL。
 
 ## 指令说明
 
