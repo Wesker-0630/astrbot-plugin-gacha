@@ -187,6 +187,7 @@ astrbot_plugin_gacha/
 
 - 图片读取失败时会显示「图片缺失」占位，不影响其他角色
 - 直接发图使用 `wives.json` 中的 URL；图鉴缩略图会优先使用本地 `assets/` 同名文件，缺失时自动下载到 `data/image_cache/`
+- 如果删除本地 `assets/` 以做成纯 CDN 部署，首次生成图鉴会逐张下载并缓存，可能较慢；之后会复用缓存
 - 生成的大图为 JPEG 压缩保存，降低体积便于 QQ 发送
 - 修改 `wives.json` 或配置后，建议在 WebUI 重载插件
 - 当前适配 AstrBot v4.28+（NapCat），消息链中 @ 组件使用 `Comp.At(qq=xxx)` 写法
