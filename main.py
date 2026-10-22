@@ -1434,6 +1434,147 @@ class WifeGachaPlugin(Star):
         await self._append_image(chain, new_wife.get("img"))
         yield event.chain_result(chain)
 
+    @filter.command(
+        "兑换溢出",
+        alias={"一键兑换", "兑换全部溢出"},
+        priority=100,
+    )
+    async def exchange_overflow(self, event: AstrMessageEvent, times: int = 0):
+        """把每个角色超过 1 张的部分按 cost:1 兑换成未拥有角色；times<=0 表示全部。"""
+        today = str(date.today())
+        user_id = str(event.get_sender_id())
+        ud = self.reset_user_daily(user_id, today)
+        cost = self.cfg_int("exchange", "exchange_cost", 3, 1, 100)
+        wives = ud.get("wives") if isinstance(ud.get("wives"), dict) else {}
+        pool_ids = {str(wife["id"]) for wife in self.wives_pool}
+        pool_names = {str(wife["id"]): wife["name"] for wife in self.wives_pool}
+
+        overflow: dict[str, int] = {}
+        for wid, cnt in wives.items():
+            if str(wid) not in pool_ids:
+                continue
+            try:
+                count = int(cnt)
+            except (TypeError, ValueError):
+                continue
+            extra = max(0, count - 1)
+            if extra > 0:
+                overflow[str(wid)] = extra
+
+        total_overflow = sum(overflow.values())
+        if total_overflow < cost:
+            yield event.plain_result(
+                f"❌ 当前溢出 {total_overflow} 张，不足 {cost} 张，无法兑换。\n"
+                "（每个角色保留 1 张，超出的部分才算溢出）"
+            )
+            return
+
+        owned_ids = set(wives.keys())
+        not_own = sorted(pool_ids - owned_ids)
+        if not not_own:
+            yield event.plain_result(
+                f"✅ 你已经集齐全部角色，当前溢出 {total_overflow} 张保留。"
+            )
+            return
+
+        max_by_overflow = total_overflow // cost
+        requested = max(0, int(times))
+        max_exchanges = (
+            max_by_overflow
+            if requested <= 0
+            else min(requested, max_by_overflow)
+        )
+        exchanges = min(max_exchanges, len(not_own))
+        if exchanges <= 0:
+            yield event.plain_result(
+                f"❌ 当前可兑换次数为 0（溢出 {total_overflow} 张，"
+                f"未拥有 {len(not_own)} 位）。"
+            )
+            return
+
+        amount = exchanges * cost
+        consumed: list[tuple[str, int]] = []
+        remaining = amount
+        sorted_overflow = sorted(
+            overflow.items(),
+            key=lambda item: (
+                -item[1],
+                int(item[0]) if item[0].isdigit() else 0,
+            ),
+        )
+        for wid, extra in sorted_overflow:
+            if remaining <= 0:
+                break
+            take = min(extra, remaining)
+            if take <= 0:
+                continue
+            wives[wid] = int(wives[wid]) - take
+            consumed.append((wid, take))
+            remaining -= take
+
+        new_ids = random.sample(not_own, exchanges)
+        new_items: list[dict[str, Any]] = []
+        for new_wid in new_ids:
+            wives[new_wid] = int(wives.get(new_wid, 0)) + 1
+            wife = next(
+                (
+                    item
+                    for item in self.wives_pool
+                    if str(item["id"]) == new_wid
+                ),
+                None,
+            )
+            if wife:
+                new_items.append(wife)
+
+        ud["wives"] = wives
+        self.user_data[user_id] = ud
+        self.save_all_userdata()
+
+        consumed_parts = [
+            f"{pool_names.get(wid, wid)}({wid})×{count}"
+            for wid, count in consumed
+        ]
+        if len(consumed_parts) > 20:
+            consumed_text = "、".join(consumed_parts[:20]) + f" 等 {len(consumed_parts)} 种"
+        else:
+            consumed_text = "、".join(consumed_parts)
+
+        new_parts = [f"{wife['name']}({wife['id']})" for wife in new_items]
+        if len(new_parts) > 20:
+            new_text = "、".join(new_parts[:20]) + f" 等 {len(new_parts)} 张"
+        else:
+            new_text = "、".join(new_parts)
+
+        remaining_overflow = sum(
+            max(0, int(wives.get(wid, 0)) - 1)
+            for wid in pool_ids
+            if wid in wives
+        )
+        stats = self._stats(ud)
+        note = ""
+        if requested > 0:
+            if exchanges < requested:
+                note = (
+                    f"\n⚠️ 你要求兑换 {requested} 次，实际只完成 {exchanges} 次"
+                    "（溢出卡或未拥有角色不足）。"
+                )
+        elif exchanges < max_by_overflow:
+            note = (
+                f"\n⚠️ 未拥有角色只剩 {len(not_own)} 位，"
+                f"本次只兑换了 {exchanges} 次。"
+            )
+
+        text = (
+            "🎉 一键兑换完成！\n"
+            f"消耗溢出卡 {amount} 张：{consumed_text}\n"
+            f"兑换 {exchanges} 次，获得 {len(new_items)} 张新角色：\n{new_text}\n"
+            f"剩余溢出 {remaining_overflow} 张（不足 {cost} 张的部分保留）\n"
+            f"📊 {self._progress_text(stats)}"
+            f"{note}"
+        )
+        yield event.plain_result(text)
+
     # ------------------------------------------------------------------
     # NTR
     # ------------------------------------------------------------------
@@ -1594,6 +1735,7 @@ class WifeGachaPlugin(Star):
 /老婆图鉴 - 生成全部角色总览大图，并显示收集进度
 /收集进度 - 查看已收集、收集率、累计获得与重复数量
 /兑换老婆 [ID] - 消耗 {cost} 张相同老婆兑换未拥有角色
+/兑换溢出 [次数] - 一键把每个角色超过 1 张的溢出卡按 {cost}:1 兑换（省略次数=全部）
 /ntr @某人 - 随机牛对方一个老婆（成功率 {ntr_rate:.0f}%）
 /ntr @某人 角色名 - 指定角色 NTR（成功率 {ntr_target_rate:.0f}%）
 
