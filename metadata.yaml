@@ -1,5 +1,5 @@
 name: 抽老婆插件
 desc: 抽老婆插件，外置 wives.json 卡池，图片使用 GitHub + jsDelivr CDN，支持 WebUI 可视化配置、每日抽卡、图鉴（含收集进度）、按 ID 兑换、一键兑换溢出卡、NTR（可指定角色），重复卡数量自动累计
-version: "1.4.1"
+version: "1.5.0"
 author: "Wesker-0630"
 astrbot_version: ">=4.28.0-beta.0"
