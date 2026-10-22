@@ -1573,7 +1573,20 @@ class WifeGachaPlugin(Star):
             f"📊 {self._progress_text(stats)}"
             f"{note}"
         )
-        yield event.plain_result(text)
+        image_limit = self.cfg_int(
+            "exchange", "exchange_image_limit", 10, 0, 50
+        )
+        chain: list = [Comp.Plain(text)]
+        if image_limit > 0 and new_items:
+            for wife in new_items[:image_limit]:
+                await self._append_image(chain, wife.get("img"))
+            if len(new_items) > image_limit:
+                chain.append(
+                    Comp.Plain(
+                        f"\n（还有 {len(new_items) - image_limit} 张新角色图片已省略）"
+                    )
+                )
+        yield event.chain_result(chain)
 
     # ------------------------------------------------------------------
     # NTR
@@ -1735,7 +1748,7 @@ class WifeGachaPlugin(Star):
 /老婆图鉴 - 生成全部角色总览大图，并显示收集进度
 /收集进度 - 查看已收集、收集率、累计获得与重复数量
 /兑换老婆 [ID] - 消耗 {cost} 张相同老婆兑换未拥有角色
-/兑换溢出 [次数] - 一键把每个角色超过 1 张的溢出卡按 {cost}:1 兑换（省略次数=全部）
+/兑换溢出 [次数] - 一键把每个角色超过 1 张的溢出卡按 {cost}:1 兑换（省略次数=全部，成功附新角色图片）
 /ntr @某人 - 随机牛对方一个老婆（成功率 {ntr_rate:.0f}%）
 /ntr @某人 角色名 - 指定角色 NTR（成功率 {ntr_target_rate:.0f}%）
 
