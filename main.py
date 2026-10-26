@@ -1601,7 +1601,7 @@ class WifeGachaPlugin(Star):
         target_id = self._extract_target_id(event)
         ntr_rate = self.cfg_rate("ntr", "ntr_success_rate", 0.6) * 100
         ntr_target_rate = self.cfg_rate(
-            "ntr", "ntr_target_success_rate", 0.6
+            "ntr", "ntr_target_success_rate", 0.3
         ) * 100
         if target_id is None:
             yield event.plain_result(
@@ -1681,7 +1681,7 @@ class WifeGachaPlugin(Star):
                     )
                 return
             stolen_wid = str(wife_info["id"])
-            success_rate = self.cfg_rate("ntr", "ntr_target_success_rate", 0.6)
+            success_rate = self.cfg_rate("ntr", "ntr_target_success_rate", 0.3)
         else:
             stolen_wid = random.choice(available)[0]
             wife_info = next(
@@ -1745,7 +1745,7 @@ class WifeGachaPlugin(Star):
         cost = self.cfg_int("exchange", "exchange_cost", 3, 1, 100)
         ntr_rate = self.cfg_rate("ntr", "ntr_success_rate", 0.6) * 100
         ntr_target_rate = self.cfg_rate(
-            "ntr", "ntr_target_success_rate", 0.6
+            "ntr", "ntr_target_success_rate", 0.3
         ) * 100
         help_text = f"""📖 抽老婆插件指令：
 抽老婆 或 /抽老婆 - 每日最多 {limit} 次抽卡（不带 / 也能触发）

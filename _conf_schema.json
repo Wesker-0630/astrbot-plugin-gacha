@@ -205,13 +205,13 @@
       "ntr_target_success_rate": {
         "description": "指定角色 NTR 成功率",
         "type": "float",
-        "default": 0.6,
+        "default": 0.3,
         "slider": {
           "min": 0,
           "max": 1,
           "step": 0.05
         },
-        "hint": "0.6 表示 60%。使用 /ntr @某人 角色名 指定目标角色时的成功率。"
+        "hint": "0.3 表示 30%。使用 /ntr @某人 角色名 指定目标角色时的成功率。"
       },
       "ntr_fail_lock": {
         "description": "NTR 失败后当天锁定",
