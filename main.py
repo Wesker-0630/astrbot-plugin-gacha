@@ -1601,7 +1601,7 @@ class WifeGachaPlugin(Star):
         target_id = self._extract_target_id(event)
         ntr_rate = self.cfg_rate("ntr", "ntr_success_rate", 0.6) * 100
         ntr_target_rate = self.cfg_rate(
-            "ntr", "ntr_target_success_rate", 0.3
+            "ntr", "ntr_target_success_rate", 0.6
         ) * 100
         if target_id is None:
             yield event.plain_result(
@@ -1681,7 +1681,7 @@ class WifeGachaPlugin(Star):
                     )
                 return
             stolen_wid = str(wife_info["id"])
-            success_rate = self.cfg_rate("ntr", "ntr_target_success_rate", 0.3)
+            success_rate = self.cfg_rate("ntr", "ntr_target_success_rate", 0.6)
         else:
             stolen_wid = random.choice(available)[0]
             wife_info = next(
@@ -1692,7 +1692,13 @@ class WifeGachaPlugin(Star):
                 return
             success_rate = self.cfg_rate("ntr", "ntr_success_rate", 0.6)
 
-        if random.random() < success_rate:
+        roll = random.random()
+        logger.info(
+            f"[NTR] attacker={attacker_id} target={target_id} "
+            f"specified={specified} rate={success_rate:.2f} "
+            f"roll={roll:.4f} result={'success' if roll < success_rate else 'fail'}"
+        )
+        if roll < success_rate:
             # 成功：复制角色；如果攻击者已拥有，则累加数量而不是覆盖
             before = int(ud_attacker["wives"].get(stolen_wid, 0))
             ud_attacker["wives"][stolen_wid] = before + 1
@@ -1739,7 +1745,7 @@ class WifeGachaPlugin(Star):
         cost = self.cfg_int("exchange", "exchange_cost", 3, 1, 100)
         ntr_rate = self.cfg_rate("ntr", "ntr_success_rate", 0.6) * 100
         ntr_target_rate = self.cfg_rate(
-            "ntr", "ntr_target_success_rate", 0.3
+            "ntr", "ntr_target_success_rate", 0.6
         ) * 100
         help_text = f"""📖 抽老婆插件指令：
 抽老婆 或 /抽老婆 - 每日最多 {limit} 次抽卡（不带 / 也能触发）
